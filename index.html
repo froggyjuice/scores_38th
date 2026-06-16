@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>37회 정기연주회 파트별 악보 배정 현황</title>
+    <!-- Pretendard Web Font for clean Korean typography -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --surface-bg: #131b2e;
+            --card-bg: rgba(30, 41, 59, 0.45);
+            --card-border: rgba(255, 255, 255, 0.06);
+            --card-hover-border: rgba(99, 102, 241, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            
+            --accent-color: #6366f1;
+            --accent-hover: #4f46e5;
+            --accent-bg-glow: rgba(99, 102, 241, 0.15);
+            
+            --emerald-color: #10b981;
+            --emerald-bg: rgba(16, 185, 129, 0.12);
+            --emerald-border: rgba(16, 185, 129, 0.25);
+            
+            --rose-color: #f43f5e;
+            --rose-bg: rgba(244, 63, 94, 0.1);
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.3), 0 2px 6px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.4), 0 4px 12px -3px rgba(0, 0, 0, 0.3);
+            
+            --font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            padding-bottom: 5rem;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+
+        /* Header section styling */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-top: 1rem;
+        }
+
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: #c7d2fe;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .logo-badge::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #818cf8;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #818cf8;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            background: linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* Statistics Dashboard Cards */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stats-card {
+            background-color: var(--surface-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--accent-color);
+        }
+
+        .stats-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 0.5rem;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .stat-item-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .stat-item-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Piece Status Panel */
+        .pieces-stats-card {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 900px) {
+            .pieces-stats-card {
+                grid-column: span 1;
+            }
+        }
+
+        .pieces-progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .piece-progress-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 0.5rem;
+            padding: 0.6rem 0.75rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .piece-progress-item:hover {
+            background: rgba(99, 102, 241, 0.06);
+            border-color: rgba(99, 102, 241, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .piece-progress-item.active {
+            background: var(--accent-bg-glow);
+            border-color: var(--accent-color);
+        }
+
+        .piece-progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .piece-progress-name {
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .piece-progress-count {
+            font-weight: 700;
+            color: var(--emerald-color);
+            font-size: 0.75rem;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color), var(--emerald-color));
+            border-radius: 9999px;
+            transition: width 0.5s ease-out;
+        }
+
+        /* Filter Controls */
+        .controls-card {
+            background-color: var(--surface-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 1.5rem;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-wrapper {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--card-border);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            color: var(--text-main);
+            font-family: var(--font-family);
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px var(--accent-bg-glow);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: var(--text-dim);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .clear-btn {
+            position: absolute;
+            right: 0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            display: none;
+            font-size: 0.9rem;
+            padding: 0.2rem;
+            transition: var(--transition-smooth);
+        }
+
+        .clear-btn:hover {
+            color: var(--text-main);
+        }
+
+        .view-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background-color: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition-smooth);
+        }
+
+        .view-toggle-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 12px var(--accent-bg-glow);
+        }
+
+        /* Filter Tags - Instruments */
+        .filter-section-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filter-reset-link {
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            text-transform: none;
+            letter-spacing: normal;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .filter-reset-link:hover {
+            text-decoration: underline;
+        }
+
+        .instrument-tags {
+            display: flex;
+            gap: 0.4rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .instrument-tags::-webkit-scrollbar {
+            height: 4px;
+        }
+        .instrument-tags::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .tag-pill {
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            white-space: nowrap;
+            transition: var(--transition-smooth);
+        }
+
+        .tag-pill:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+            color: var(--text-main);
+        }
+
+        .tag-pill.active {
+            background-color: var(--active-bg, var(--accent-color));
+            color: #ffffff;
+            border-color: var(--active-border, var(--accent-color));
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Score filters (checkbox-like tags) */
+        .score-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .score-filter-chip {
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: var(--transition-smooth);
+        }
+
+        .score-filter-chip:hover {
+            background-color: rgba(255, 255, 255, 0.07);
+            color: var(--text-main);
+        }
+
+        .score-filter-chip.active {
+            background-color: var(--emerald-bg);
+            border-color: var(--emerald-border);
+            color: var(--emerald-color);
+        }
+
+        .score-filter-chip.active::before {
+            content: '✓';
+            font-weight: 800;
+        }
+
+        /* Results Counter */
+        .results-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            padding: 0 0.25rem;
+        }
+
+        .results-count span {
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        /* List Layout: Card View (Default on Mobile) */
+        .list-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .list-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .member-card {
+            background-color: var(--surface-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .member-card:hover {
+            border-color: var(--card-hover-border);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .member-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .instrument-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
+            border-radius: 0.35rem;
+            text-transform: uppercase;
+        }
+
+        .card-header-right {
+            text-align: right;
+        }
+
+        .gisu-badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            background-color: var(--accent-bg-glow);
+            padding: 0.15rem 0.45rem;
+            border-radius: 0.35rem;
+            display: inline-block;
+            margin-bottom: 0.2rem;
+        }
+
+        .grade-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+        }
+
+        .phone-number {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .phone-number:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        .phone-actions {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .action-icon-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.25rem;
+            padding: 0.25rem 0.4rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 38px;
+            min-height: 24px;
+        }
+
+        .action-icon-btn:hover {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .card-pieces {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 0.75rem;
+        }
+
+        .card-piece-item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.75rem;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+        }
+
+        .card-piece-item.assigned {
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .card-piece-item.unassigned {
+            color: var(--text-dim);
+            text-decoration: line-through;
+            opacity: 0.4;
+        }
+
+        .indicator-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .indicator-dot.active {
+            background-color: var(--emerald-color);
+            box-shadow: 0 0 6px var(--emerald-color);
+        }
+
+        .indicator-dot.inactive {
+            background-color: var(--text-dim);
+        }
+
+        /* List Layout: Table View (Scroll Matrix) */
+        .table-wrapper {
+            background-color: var(--surface-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 1rem;
+            overflow-x: auto;
+            box-shadow: var(--shadow-md);
+            display: none; /* Block when layout is table */
+            max-height: 70vh;
+            scrollbar-width: thin;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        .matrix-table th, 
+        .matrix-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            white-space: nowrap;
+        }
+
+        .matrix-table th {
+            background-color: #101726;
+            color: var(--text-muted);
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        /* Sticky Columns in Table View for scrolling */
+        .matrix-table th.sticky-name,
+        .matrix-table td.sticky-name {
+            position: sticky;
+            left: 0;
+            background-color: #131b2e;
+            z-index: 10;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .matrix-table th.sticky-inst,
+        .matrix-table td.sticky-inst {
+            position: sticky;
+            left: 75px; /* Adjust according to name width */
+            background-color: #131b2e;
+            z-index: 10;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 3px 0 5px -2px rgba(0,0,0,0.3);
+        }
+
+        .matrix-table th.sticky-name,
+        .matrix-table th.sticky-inst {
+            background-color: #101726;
+            z-index: 25;
+        }
+
+        .matrix-table tbody tr:hover td {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .matrix-table tbody tr:hover td.sticky-name,
+        .matrix-table tbody tr:hover td.sticky-inst {
+            background-color: #19223a;
+        }
+
+        .table-assigned {
+            color: var(--emerald-color);
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .table-assigned-pill {
+            background-color: var(--emerald-bg);
+            border: 1px solid var(--emerald-border);
+            color: var(--emerald-color);
+            padding: 0.15rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            display: inline-block;
+        }
+
+        .table-unassigned {
+            color: var(--text-dim);
+            text-align: center;
+            opacity: 0.25;
+        }
+
+        /* View State Toggle styles for active layout */
+        body.layout-table .table-wrapper {
+            display: block;
+        }
+
+        body.layout-table .list-container {
+            display: none;
+        }
+
+        body.layout-card .table-wrapper {
+            display: none;
+        }
+
+        body.layout-card .list-container {
+            display: grid;
+        }
+
+        /* Copy Dialog Alert */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* SVG icons */
+        .icon {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            stroke-width: 0;
+            stroke: currentColor;
+            fill: currentColor;
+            vertical-align: middle;
+        }
+
+        /* Dynamic check styling */
+        .piece-check-group {
+            display: inline-flex;
+            gap: 0.25rem;
+            margin-left: auto;
+        }
+
+        .check-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            cursor: pointer;
+            padding: 0.15rem 0.35rem;
+            border-radius: 0.25rem;
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-dim);
+            transition: var(--transition-smooth);
+            user-select: none;
+            line-height: 1;
+        }
+
+        .check-label:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+        }
+
+        .check-label input {
+            display: none;
+        }
+
+        .check-label.dist-label.checked {
+            background-color: rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.2);
+            color: var(--emerald-color);
+            opacity: 0.8;
+        }
+
+        .check-label.recv-label.checked {
+            background-color: var(--emerald-bg);
+            border-color: var(--emerald-border);
+            color: var(--emerald-color);
+            font-weight: 800;
+        }
+
+        /* Card piece text styling depending on state */
+        .card-piece-item.assigned.state-none .piece-name {
+            color: var(--text-main);
+            opacity: 0.8;
+            font-weight: 500;
+        }
+        .card-piece-item.assigned.state-dist .piece-name {
+            color: var(--emerald-color);
+            opacity: 0.6; /* 연한 글씨 */
+            font-weight: 400;
+        }
+        .card-piece-item.assigned.state-recv .piece-name {
+            color: var(--emerald-color);
+            opacity: 1; /* 짙은 글씨 */
+            font-weight: 800;
+        }
+
+        /* Table view check layout */
+        .table-piece-cell {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table-cell-check {
+            display: inline-flex;
+            gap: 0.2rem;
+            justify-content: center;
+        }
+        
+        .table-piece-cell.state-none {
+            background-color: transparent;
+        }
+        .table-piece-cell.state-dist {
+            background-color: rgba(16, 185, 129, 0.04);
+        }
+        .table-piece-cell.state-recv {
+            background-color: rgba(16, 185, 129, 0.12);
+        }
+    </style>
+</head>
+<body class="layout-card">
+
+    <div class="container">
+        <!-- Logo and Header -->
+        <header>
+            <div class="logo-badge">37th Concert Assignments</div>
+            <h1>제37회 정기연주회 악보 배정 현황</h1>
+            <p>모바일 및 데스크톱 환경에 최적화된 오케스트라 파트원별 악보 배정 현황판</p>
+        </header>
+
+        <!-- Stats Dashboard -->
+        <div class="stats-container">
+            <div class="stats-card">
+                <div class="stats-title">오케스트라 인원 요약</div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-item-label">총 참여인원</div>
+                        <div id="stat-total-players" class="stat-item-value">0명</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-label">현악기</div>
+                        <div id="stat-strings-players" class="stat-item-value">0명</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-label">목관악기</div>
+                        <div id="stat-woodwind-players" class="stat-item-value">0명</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-label">금관악기</div>
+                        <div id="stat-brass-players" class="stat-item-value">0명</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-card pieces-stats-card">
+                <div class="stats-title">곡별 배정 인원 (클릭 시 필터)</div>
+                <div id="pieces-stats-grid" class="pieces-progress-grid">
+                    <!-- Progress items will be dynamically injected here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="controls-card">
+            <div class="search-row">
+                <div class="search-wrapper">
+                    <!-- Search Icon SVG -->
+                    <svg class="search-icon" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="search-input" class="search-input" placeholder="이름, 기수, 연락처, 학년으로 검색..." autocomplete="off">
+                    <button id="clear-btn" class="clear-btn">&times;</button>
+                </div>
+                <button id="view-toggle-btn" class="view-toggle-btn">
+                    <!-- Cards Grid Icon SVG -->
+                    <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span id="toggle-btn-text">목록 보기</span>
+                </button>
+            </div>
+
+            <!-- Instrument filters -->
+            <div class="filter-section-title">
+                악기 파트 필터
+                <span id="reset-filters" class="filter-reset-link">필터 초기화</span>
+            </div>
+            <div id="instrument-tags-container" class="instrument-tags">
+                <span class="tag-pill active" data-inst="ALL">전체</span>
+                <!-- Instrument tags will be dynamically injected -->
+            </div>
+
+            <!-- Piece filters -->
+            <div class="filter-section-title" style="margin-top: 0.5rem;">곡 선택 필터 (다중 선택 시 교집합 필터링)</div>
+            <div id="score-filters-container" class="score-filters">
+                <!-- Score chips will be dynamically injected -->
+            </div>
+        </div>
+
+        <!-- Results Info -->
+        <div class="results-bar">
+            <div id="results-count" class="results-count">
+                검색 결과: <span>0</span>명
+            </div>
+            <div>
+                * 모바일에서는 카드 뷰, 태블릿/PC에서는 목록 뷰를 권장합니다.
+            </div>
+        </div>
+
+        <!-- Card Grid View (Mobile default) -->
+        <div id="list-container" class="list-container">
+            <!-- Cards will be dynamically injected here -->
+        </div>
+
+        <!-- Table Grid View (Desktop scrollable table) -->
+        <div id="table-wrapper" class="table-wrapper">
+            <table class="matrix-table" id="matrix-table">
+                <thead>
+                    <tr id="table-header-row">
+                        <th class="sticky-name">이름</th>
+                        <th class="sticky-inst">악기</th>
+                        <th>기수</th>
+                        <th>학년</th>
+                        <th>연락처</th>
+                        <!-- Dynamic piece headers will be injected here -->
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Rows will be injected here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Copy Status Notification Toast -->
+    <div id="toast" class="toast">연락처가 복사되었습니다!</div>
+
+    <!-- Embedded raw CSV data -->
+    <script id="csv-data" type="text/csv">기수,이름,연락처,악기,학년,나부코 서곡,플룻 협주곡,바이올린 협주곡,핀란디아,드보르작 9번,스타워즈,Love Wins All,
+51기,김동욱,010-4432-8923,1Vn,군복무,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+52기,문성하,010-8451-2678,1Vn,본과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+52기,주은서,010-2867-4576,1Vn,본과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,원희서,010-3449-1923,1Vn,본과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+55기,박예서,010-8899-9466,1Vn,예과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+55기,오리안,010-2312-8932,1Vn,예과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+56기,강민,010-7568-7581,1Vn,본과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+56기,김태율,010-8233-9820,1Vn,예과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+56기,이아람,010-4775-5693,1Vn,예과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+56기,하늘,010-4637-0514,1Vn,예과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+51기,최홍준,010-5754-1525,2Vn,군복무,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+52기,이지훈,010-4124-4811,2Vn,본과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,고찬준,010-5400-4168,2Vn,본과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,김유경,010-7557-8247,2Vn,본과 1학년,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,
+53기,김형래,010-6603-1388,2Vn,본과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,신혜인,010-4080-5903,2Vn,본과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,유한빈,010-4152-2898,2Vn,예과 2학년,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,TRUE,
+53기,정한비,010-7722-1207,2Vn,본과 1학년,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,
+54기,김유진,010-8223-2497,2Vn,예과 2학년,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,TRUE,
+54기,박한얼,010-2074-7939,2Vn,예과 1학년,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,
+54기,유재훈,010-9792-5992,2Vn,예과 1학년,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,
+54기,이현군,010-5651-7458,2Vn,예과 2학년,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,TRUE,
+55기,유동균,010-3695-6337,2Vn,예과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+55기,이현빈,010-9295-5482,2Vn,예과 2학년,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,TRUE,
+56기,이영민,010-2553-8304,2Vn,예과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+56기,정다진,010-3002-9715,2Vn,예과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+51기,박세준,010-2663-1680,Bsn,본과 3학년,TRUE,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,배승준,010-6550-8040,Cb,본과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+54기,정재민,010-6523-5251,Cb,예과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+56기,김서진,010-2400-6539,Cb,예과 1학년,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,TRUE,
+56기,염건영,010-3022-7552,Cb,예과 1학년,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,
+교수님,박성광,,Cb,OB,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,송예린,010-4479-8163,Cl,본과 1학년,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,TRUE,
+54기,박하담,010-3838-2158,Cl,예과 2학년,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,TRUE,
+55기,양성현,010-9927-3375,Cl,예과 2학년,TRUE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,
+56기,김민결,010-7642-9887,Cl,예과 1학년,TRUE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,
+교수님,최하영,,Cl,OB,TRUE,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,
+교수님,이승옥,,Cl,OB,TRUE,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,
+52기,이민주,010-6602-1974,Fl,본과 2학년,FALSE,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,
+52기,임채원,010-7255-1393,Fl,본과 2학년,TRUE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,
+52기,전은채,010-9938-0169,Fl,본과 2학년,TRUE,FALSE,FALSE,FALSE,TRUE,TRUE,TRUE,
+53기,오민석,010-9440-7480,Fl,본과 1학년,FALSE,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,정보경,010-3731-5539,Fl,본과 1학년,TRUE,FALSE,FALSE,FALSE,TRUE,TRUE,TRUE,
+54기,최송이,010-8363-4389,Fl,예과 2학년,TRUE,FALSE,TRUE,TRUE,FALSE,FALSE,FALSE,
+52기,최현,010-4143-8482,Hrn,본과 1학년,TRUE,FALSE,FALSE,TRUE,TRUE,TRUE,TRUE,
+52기,선현서,010-2304-2766,Ob,본과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+52기,황준서,010-3355-7958,Ob,본과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,김주연,010-5248-9438,Ob,본과 1학년,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,
+51기,장건영,010-2284-3559,Tpt,군복무,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE,
+52기,김근우,010-6278-7531,Tpt,군복무,FALSE,FALSE,FALSE,TRUE,FALSE,TRUE,TRUE,
+56기,이채훈,010-2576-9440,Tpt,예과 1학년,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,
+선배님,전기엽,,Tpt,OB,FALSE,FALSE,FALSE,TRUE,FALSE,TRUE,TRUE,
+52기,옥지윤,010-3299-7871,Va,본과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,국은한,010-4243-5411,Va,본과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,황세연,010-9346-4262,Va,본과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+54기,김서우,010-2227-4108,Va,예과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+54기,유기범,010-9847-1877,Va,예과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+55기,서지예,010-9078-8241,Va,예과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+56기,장형진,010-2429-4886,Va,예과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+교수님,박승철,,Va,OB,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+51기,김청,010-2830-9638,Vc,군복무,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+52기,강승훈,010-3787-1997,Vc,본과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+52기,고은찬,010-5166-9402,Vc,본과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+52기,박준서,010-2007-9466,Vc,본과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+52기,이주현,010-2262-8042,Vc,본과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+52기,전수연,010-2139-7869,Vc,본과 2학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,권희,010-2364-8649,Vc,본과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,이윤성,010-3470-7012,Vc,본과 1학년,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
+53기,전승현,010-9414-2631,Vc,예과 2학년,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,TRUE,
+54기,유재민,010-8460-3329,Vc,예과 2학년,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,TRUE,
+55기,이우주,010-6382-5142,Vc,예과 2학년,FALSE,FALSE,FALSE,FALSE,TRUE,TRUE,TRUE,
+56기,김하은,010-2993-5261,Vc,예과 1학년,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,
+56기,박지성,010-7412-1420,Vc,예과 1학년,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,
+56기,표민준,010-4601-0823,Vc,예과 1학년,TRUE,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,</script>
+
+    <!-- JavaScript logic -->
+    <script>
+        // Design colors map for instrument tags/badges
+        const instrumentMeta = {
+            '1Vn': { label: '1st Violin', color: '#ff4b72', bg: 'rgba(255, 75, 114, 0.12)', border: 'rgba(255, 75, 114, 0.25)' },
+            '2Vn': { label: '2nd Violin', color: '#ff6b8b', bg: 'rgba(255, 107, 139, 0.12)', border: 'rgba(255, 107, 139, 0.25)' },
+            'Va': { label: 'Viola', color: '#ff9f43', bg: 'rgba(255, 159, 67, 0.12)', border: 'rgba(255, 159, 67, 0.25)' },
+            'Vc': { label: 'Cello', color: '#feca57', bg: 'rgba(254, 202, 87, 0.12)', border: 'rgba(254, 202, 87, 0.25)' },
+            'Cb': { label: 'Double Bass', color: '#1dd1a1', bg: 'rgba(29, 209, 161, 0.12)', border: 'rgba(29, 209, 161, 0.25)' },
+            'Fl': { label: 'Flute', color: '#48dbfb', bg: 'rgba(72, 219, 251, 0.12)', border: 'rgba(72, 219, 251, 0.25)' },
+            'Ob': { label: 'Oboe', color: '#00d2d3', bg: 'rgba(0, 210, 211, 0.12)', border: 'rgba(0, 210, 211, 0.25)' },
+            'Cl': { label: 'Clarinet', color: '#10ac84', bg: 'rgba(16, 172, 132, 0.12)', border: 'rgba(16, 172, 132, 0.25)' },
+            'Bsn': { label: 'Bassoon', color: '#a55eea', bg: 'rgba(165, 94, 234, 0.12)', border: 'rgba(165, 94, 234, 0.25)' },
+            'Hrn': { label: 'French Horn', color: '#ff781f', bg: 'rgba(255, 120, 31, 0.12)', border: 'rgba(255, 120, 31, 0.25)' },
+            'Tpt': { label: 'Trumpet', color: '#ef5777', bg: 'rgba(239, 87, 119, 0.12)', border: 'rgba(239, 87, 119, 0.25)' },
+        };
+
+        const defaultMeta = { label: 'Unknown', color: '#94a3b8', bg: 'rgba(148, 163, 184, 0.1)', border: 'rgba(148, 163, 184, 0.2)' };
+
+        // State variables
+        let parsedData = [];
+        let scoreHeaders = [];
+        let activeFilters = {
+            search: '',
+            instrument: 'ALL',
+            scores: new Set()
+        };
+        let currentLayout = 'card'; // 'card' or 'table'
+
+        // Check state helpers (stored in localStorage)
+        function getCheckState(name, inst, piece) {
+            const key = `assign_37th_${name}_${inst}_${piece}`;
+            const stored = localStorage.getItem(key);
+            return stored ? JSON.parse(stored) : { dist: false, recv: false };
+        }
+
+        function saveCheckState(name, inst, piece, state) {
+            const key = `assign_37th_${name}_${inst}_${piece}`;
+            localStorage.setItem(key, JSON.stringify(state));
+        }
+
+        function handleCheckChange(name, inst, piece, type, checked) {
+            const state = getCheckState(name, inst, piece);
+            state[type] = checked;
+            saveCheckState(name, inst, piece, state);
+
+            const stateClass = state.recv ? 'state-recv' : (state.dist ? 'state-dist' : 'state-none');
+
+            // Synchronize Card View elements
+            document.querySelectorAll(`.card-piece-item[data-name="${name}"][data-inst="${inst}"][data-piece="${piece}"]`).forEach(item => {
+                item.className = `card-piece-item assigned ${stateClass}`;
+                
+                const distLabel = item.querySelector('.dist-label');
+                if (distLabel) {
+                    distLabel.classList.toggle('checked', state.dist);
+                    distLabel.querySelector('.dist-cb').checked = state.dist;
+                }
+                
+                const recvLabel = item.querySelector('.recv-label');
+                if (recvLabel) {
+                    recvLabel.classList.toggle('checked', state.recv);
+                    recvLabel.querySelector('.recv-cb').checked = state.recv;
+                }
+            });
+
+            // Synchronize Table View elements
+            document.querySelectorAll(`.table-piece-cell[data-name="${name}"][data-inst="${inst}"][data-piece="${piece}"]`).forEach(cell => {
+                cell.className = `table-piece-cell ${stateClass}`;
+                
+                const distLabel = cell.querySelector('.dist-label');
+                if (distLabel) {
+                    distLabel.classList.toggle('checked', state.dist);
+                    distLabel.querySelector('.dist-cb').checked = state.dist;
+                }
+                
+                const recvLabel = cell.querySelector('.recv-label');
+                if (recvLabel) {
+                    recvLabel.classList.toggle('checked', state.recv);
+                    recvLabel.querySelector('.recv-cb').checked = state.recv;
+                }
+            });
+        }
+
+        // DOM elements
+        const listContainer = document.getElementById('list-container');
+        const tableWrapper = document.getElementById('table-wrapper');
+        const tableHeaderRow = document.getElementById('table-header-row');
+        const tableBody = document.getElementById('table-body');
+        const resultsCountSpan = document.querySelector('#results-count span');
+        const searchInput = document.getElementById('search-input');
+        const clearBtn = document.getElementById('clear-btn');
+        const viewToggleBtn = document.getElementById('view-toggle-btn');
+        const toggleBtnText = document.getElementById('toggle-btn-text');
+        const instrumentTagsContainer = document.getElementById('instrument-tags-container');
+        const scoreFiltersContainer = document.getElementById('score-filters-container');
+        const resetFiltersBtn = document.getElementById('reset-filters');
+        
+        // Stats elements
+        const stringsInsts = ['1Vn', '2Vn', 'Va', 'Vc', 'Cb'];
+        const woodwindsInsts = ['Fl', 'Ob', 'Cl', 'Bsn'];
+        const brassInsts = ['Hrn', 'Tpt'];
+
+        // Init function
+        window.addEventListener('DOMContentLoaded', () => {
+            initApp();
+        });
+
+        function initApp() {
+            // Parse embedded CSV
+            const csvContent = document.getElementById('csv-data').textContent;
+            const parseResult = parseCSV(csvContent);
+            parsedData = parseResult.data;
+            scoreHeaders = parseResult.headers;
+
+            // Sort data by Instrument Order (Strings -> Woodwinds -> Brass) then Gisu then Name
+            const instOrder = [...stringsInsts, ...woodwindsInsts, ...brassInsts];
+            parsedData.sort((a, b) => {
+                const aIdx = instOrder.indexOf(a.instrument);
+                const bIdx = instOrder.indexOf(b.instrument);
+                if (aIdx !== bIdx) return (aIdx === -1 ? 99 : aIdx) - (bIdx === -1 ? 99 : bIdx);
+                
+                // Sort by generation (descending or ascending? Usually older generation first, e.g. 51기 before 52기)
+                const aGisu = getGisuNumber(a.gisu);
+                const bGisu = getGisuNumber(b.gisu);
+                if (aGisu !== bGisu) return aGisu - bGisu;
+                
+                return a.name.localeCompare(b.name, 'ko');
+            });
+
+            // Set default layout based on screen width
+            if (window.innerWidth >= 768) {
+                setLayout('table');
+            } else {
+                setLayout('card');
+            }
+
+            // Render static filters and headers
+            renderTableHeader();
+            renderInstrumentFilterTags();
+            renderScoreFilterChips();
+            
+            // Render data
+            updateDashboardStats();
+            applyFiltersAndRender();
+
+            // Set up event listeners
+            setupEventListeners();
+        }
+
+        function parseCSV(text) {
+            const lines = text.trim().split('\n');
+            if (lines.length === 0) return { headers: [], data: [] };
+            
+            // Clean header line
+            const headers = lines[0].split(',').map(h => h.trim()).filter(h => h !== '');
+            const data = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                const row = line.split(',').map(v => v.trim());
+                const item = {
+                    gisu: row[0] || '',
+                    name: row[1] || '',
+                    phone: row[2] || '',
+                    instrument: row[3] || '',
+                    grade: row[4] || '',
+                    pieces: {}
+                };
+
+                // Pieces are from index 5 onwards matching headers
+                for (let j = 5; j < headers.length; j++) {
+                    const pieceName = headers[j];
+                    const val = row[j] || 'FALSE';
+                    item.pieces[pieceName] = val.toUpperCase() === 'TRUE';
+                }
+                data.push(item);
+            }
+
+            return {
+                headers: headers.slice(5),
+                data: data
+            };
+        }
+
+        function getGisuNumber(gisuText) {
+            if (gisuText === '교수님') return 0;
+            if (gisuText === '선배님') return 1;
+            const match = gisuText.match(/(\d+)기/);
+            return match ? parseInt(match[1]) : 999;
+        }
+
+        // Helper to match instrument groups
+        function getInstrumentGroup(inst) {
+            if (stringsInsts.includes(inst)) return 'strings';
+            if (woodwindsInsts.includes(inst)) return 'woodwinds';
+            if (brassInsts.includes(inst)) return 'brass';
+            return 'other';
+        }
+
+        // Render functions
+        function renderTableHeader() {
+            // Add piece headers to table
+            scoreHeaders.forEach(piece => {
+                const th = document.createElement('th');
+                th.textContent = piece;
+                tableHeaderRow.appendChild(th);
+            });
+        }
+
+        function renderInstrumentFilterTags() {
+            // Get unique instruments present in data
+            const uniqueInsts = [...new Set(parsedData.map(item => item.instrument))];
+            
+            // Sort them by our predefined order
+            const instOrder = [...stringsInsts, ...woodwindsInsts, ...brassInsts];
+            uniqueInsts.sort((a, b) => instOrder.indexOf(a) - instOrder.indexOf(b));
+
+            uniqueInsts.forEach(inst => {
+                const tag = document.createElement('span');
+                tag.className = 'tag-pill';
+                tag.dataset.inst = inst;
+                tag.textContent = inst;
+                
+                // Color variables for customization
+                const meta = instrumentMeta[inst] || defaultMeta;
+                tag.style.setProperty('--active-bg', meta.color);
+                tag.style.setProperty('--active-border', meta.color);
+                
+                instrumentTagsContainer.appendChild(tag);
+            });
+        }
+
+        function renderScoreFilterChips() {
+            scoreHeaders.forEach(piece => {
+                const chip = document.createElement('span');
+                chip.className = 'score-filter-chip';
+                chip.dataset.score = piece;
+                chip.textContent = piece;
+                scoreFiltersContainer.appendChild(chip);
+            });
+        }
+
+        function updateDashboardStats() {
+            // 1. Core Summary counts
+            const total = parsedData.length;
+            let strings = 0;
+            let woodwinds = 0;
+            let brass = 0;
+
+            parsedData.forEach(item => {
+                const grp = getInstrumentGroup(item.instrument);
+                if (grp === 'strings') strings++;
+                else if (grp === 'woodwinds') woodwinds++;
+                else if (grp === 'brass') brass++;
+            });
+
+            document.getElementById('stat-total-players').textContent = `${total}명`;
+            document.getElementById('stat-strings-players').textContent = `${strings}명`;
+            document.getElementById('stat-woodwind-players').textContent = `${woodwinds}명`;
+            document.getElementById('stat-brass-players').textContent = `${brass}명`;
+
+            // 2. Score Assignment Distribution progress bars
+            const piecesStatsGrid = document.getElementById('pieces-stats-grid');
+            piecesStatsGrid.innerHTML = '';
+
+            scoreHeaders.forEach(piece => {
+                const assignedCount = parsedData.filter(item => item.pieces[piece]).length;
+                const percentage = total > 0 ? Math.round((assignedCount / total) * 100) : 0;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = `piece-progress-item ${activeFilters.scores.has(piece) ? 'active' : ''}`;
+                itemDiv.dataset.piece = piece;
+                itemDiv.innerHTML = `
+                    <div class="piece-progress-header">
+                        <div class="piece-progress-name" title="${piece}">${piece}</div>
+                        <div class="piece-progress-count">${assignedCount}명 (${percentage}%)</div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: ${percentage}%"></div>
+                    </div>
+                `;
+
+                // Quick click on stats bar to toggle that piece filter!
+                itemDiv.addEventListener('click', () => {
+                    toggleScoreFilter(piece);
+                });
+
+                piecesStatsGrid.appendChild(itemDiv);
+            });
+        }
+
+        function applyFiltersAndRender() {
+            const filtered = parsedData.filter(item => {
+                // 1. Text Search Filter (Name, Contact, Grade, Generation)
+                if (activeFilters.search) {
+                    const query = activeFilters.search.toLowerCase();
+                    const nameMatch = item.name.toLowerCase().includes(query);
+                    const phoneMatch = item.phone.replace(/-/g, '').includes(query.replace(/-/g, ''));
+                    const gisuMatch = item.gisu.toLowerCase().includes(query);
+                    const gradeMatch = item.grade.toLowerCase().includes(query);
+                    const instMatch = item.instrument.toLowerCase().includes(query);
+                    
+                    if (!nameMatch && !phoneMatch && !gisuMatch && !gradeMatch && !instMatch) {
+                        return false;
+                    }
+                }
+
+                // 2. Instrument Filter
+                if (activeFilters.instrument !== 'ALL' && item.instrument !== activeFilters.instrument) {
+                    return false;
+                }
+
+                // 3. Piece Selection Filter (Intersection: Must be playing ALL active filter pieces)
+                if (activeFilters.scores.size > 0) {
+                    for (let piece of activeFilters.scores) {
+                        if (!item.pieces[piece]) return false;
+                    }
+                }
+
+                return true;
+            });
+
+            // Update Counter
+            resultsCountSpan.textContent = filtered.length;
+
+            // Render Card Layout
+            renderCards(filtered);
+
+            // Render Table Layout
+            renderTableRows(filtered);
+        }
+
+        function renderCards(data) {
+            listContainer.innerHTML = '';
+            
+            if (data.length === 0) {
+                listContainer.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem 1rem; color: var(--text-dim);">
+                        조건에 맞는 파트원이 없습니다.
+                    </div>
+                `;
+                return;
+            }
+
+            data.forEach(item => {
+                const meta = instrumentMeta[item.instrument] || defaultMeta;
+                
+                const card = document.createElement('div');
+                card.className = 'member-card';
+                
+                // Contact row render helper
+                let contactRow = '';
+                if (item.phone) {
+                    contactRow = `
+                        <div class="contact-info">
+                            <a href="tel:${item.phone}" class="phone-number">
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 0.1rem;">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                                ${item.phone}
+                            </a>
+                            <div class="phone-actions">
+                                <button class="action-icon-btn" onclick="copyContact('${item.phone}')">복사</button>
+                                <a href="sms:${item.phone}" class="action-icon-btn" style="text-decoration:none;">문자</a>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    contactRow = `
+                        <div class="contact-info" style="color: var(--text-dim); justify-content: center; font-style: italic;">
+                            연락처 없음
+                        </div>
+                    `;
+                }
+
+                // Render assigned scores as badges
+                let piecesHTML = '';
+                scoreHeaders.forEach(piece => {
+                    const isAssigned = item.pieces[piece];
+                    let checkboxHTML = '';
+                    let stateClass = 'unassigned';
+                    let extraClass = 'state-none';
+                    
+                    if (isAssigned) {
+                        stateClass = 'assigned';
+                        const state = getCheckState(item.name, item.instrument, piece);
+                        extraClass = state.recv ? 'state-recv' : (state.dist ? 'state-dist' : 'state-none');
+                        
+                        checkboxHTML = `
+                            <div class="piece-check-group">
+                                <label class="check-label dist-label ${state.dist ? 'checked' : ''}" title="분배 확인">
+                                    <input type="checkbox" class="dist-cb" ${state.dist ? 'checked' : ''} onchange="handleCheckChange('${item.name}', '${item.instrument}', '${piece}', 'dist', this.checked)">
+                                    <span>분배</span>
+                                </label>
+                                <label class="check-label recv-label ${state.recv ? 'checked' : ''}" title="수령 확인">
+                                    <input type="checkbox" class="recv-cb" ${state.recv ? 'checked' : ''} onchange="handleCheckChange('${item.name}', '${item.instrument}', '${piece}', 'recv', this.checked)">
+                                    <span>수령</span>
+                                </label>
+                            </div>
+                        `;
+                    }
+                    
+                    piecesHTML += `
+                        <div class="card-piece-item ${stateClass} ${extraClass}" data-name="${item.name}" data-inst="${item.instrument}" data-piece="${piece}">
+                            <span class="indicator-dot ${isAssigned ? 'active' : 'inactive'}"></span>
+                            <span class="piece-name" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${piece}">${piece}</span>
+                            ${checkboxHTML}
+                        </div>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div>
+                        <div class="card-header">
+                            <div class="card-header-left">
+                                <span class="member-name">${item.name}</span>
+                                <span class="instrument-badge" style="color: ${meta.color}; background-color: ${meta.bg}; border: 1px solid ${meta.border}">${item.instrument}</span>
+                            </div>
+                            <div class="card-header-right">
+                                <span class="gisu-badge">${item.gisu}</span>
+                                <span class="grade-text">${item.grade || '&nbsp;'}</span>
+                            </div>
+                        </div>
+                        
+                        ${contactRow}
+                    </div>
+
+                    <div class="card-pieces">
+                        ${piecesHTML}
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            });
+        }
+
+        function renderTableRows(data) {
+            tableBody.innerHTML = '';
+            
+            if (data.length === 0) {
+                const colSpan = 5 + scoreHeaders.length;
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="${colSpan}" style="text-align: center; padding: 3rem 1rem; color: var(--text-dim);">
+                            조건에 맞는 파트원이 없습니다.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                const meta = instrumentMeta[item.instrument] || defaultMeta;
+
+                // Basic details
+                tr.innerHTML = `
+                    <td class="sticky-name" style="font-weight: 700;">${item.name}</td>
+                    <td class="sticky-inst">
+                        <span class="instrument-badge" style="color: ${meta.color}; background-color: ${meta.bg}; border: 1px solid ${meta.border}">${item.instrument}</span>
+                    </td>
+                    <td>${item.gisu}</td>
+                    <td>${item.grade}</td>
+                    <td>
+                        ${item.phone ? `<a href="tel:${item.phone}" style="color: var(--text-main); text-decoration:none; font-weight:500;">${item.phone}</a>` : `<span style="color:var(--text-dim);">-</span>`}
+                    </td>
+                `;
+
+                // Pieces column
+                scoreHeaders.forEach(piece => {
+                    const td = document.createElement('td');
+                    if (item.pieces[piece]) {
+                        const state = getCheckState(item.name, item.instrument, piece);
+                        const stateClass = state.recv ? 'state-recv' : (state.dist ? 'state-dist' : 'state-none');
+                        
+                        td.className = `table-piece-cell ${stateClass}`;
+                        td.dataset.name = item.name;
+                        td.dataset.inst = item.instrument;
+                        td.dataset.piece = piece;
+                        
+                        td.innerHTML = `
+                            <div class="table-cell-check">
+                                <label class="check-label dist-label ${state.dist ? 'checked' : ''}" title="분배 확인">
+                                    <input type="checkbox" class="dist-cb" ${state.dist ? 'checked' : ''} onchange="handleCheckChange('${item.name}', '${item.instrument}', '${piece}', 'dist', this.checked)">
+                                    <span>분</span>
+                                </label>
+                                <label class="check-label recv-label ${state.recv ? 'checked' : ''}" title="수령 확인">
+                                    <input type="checkbox" class="recv-cb" ${state.recv ? 'checked' : ''} onchange="handleCheckChange('${item.name}', '${item.instrument}', '${piece}', 'recv', this.checked)">
+                                    <span>수</span>
+                                </label>
+                            </div>
+                        `;
+                    } else {
+                        td.className = 'table-unassigned';
+                        td.textContent = '·';
+                    }
+                    tr.appendChild(td);
+                });
+
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Action controllers
+        function setLayout(layout) {
+            currentLayout = layout;
+            if (layout === 'card') {
+                document.body.classList.remove('layout-table');
+                document.body.classList.add('layout-card');
+                toggleBtnText.textContent = '목록 보기';
+                // Switch icon to list/table matrix
+                viewToggleBtn.innerHTML = `
+                    <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                    <span>목록 보기</span>
+                `;
+            } else {
+                document.body.classList.remove('layout-card');
+                document.body.classList.add('layout-table');
+                // Switch icon to cards grid
+                viewToggleBtn.innerHTML = `
+                    <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>카드 보기</span>
+                `;
+            }
+        }
+
+        function copyContact(phone) {
+            navigator.clipboard.writeText(phone).then(() => {
+                showToast();
+            }).catch(err => {
+                console.error('클립보드 복사 실패: ', err);
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        function toggleScoreFilter(piece) {
+            if (activeFilters.scores.has(piece)) {
+                activeFilters.scores.delete(piece);
+            } else {
+                activeFilters.scores.add(piece);
+            }
+
+            // Sync visual states of chips
+            const chips = scoreFiltersContainer.querySelectorAll('.score-filter-chip');
+            chips.forEach(chip => {
+                const isSelected = activeFilters.scores.has(chip.dataset.score);
+                chip.classList.toggle('active', isSelected);
+            });
+
+            // Re-render
+            updateDashboardStats();
+            applyFiltersAndRender();
+        }
+
+        function resetAllFilters() {
+            activeFilters.search = '';
+            activeFilters.instrument = 'ALL';
+            activeFilters.scores.clear();
+
+            // Reset Search bar UI
+            searchInput.value = '';
+            clearBtn.style.display = 'none';
+
+            // Reset Instrument tags UI
+            const instPills = instrumentTagsContainer.querySelectorAll('.tag-pill');
+            instPills.forEach(pill => {
+                pill.classList.toggle('active', pill.dataset.inst === 'ALL');
+            });
+
+            // Reset Score chips UI
+            const scoreChips = scoreFiltersContainer.querySelectorAll('.score-filter-chip');
+            scoreChips.forEach(chip => {
+                chip.classList.remove('active');
+            });
+
+            // Re-render
+            updateDashboardStats();
+            applyFiltersAndRender();
+        }
+
+        function setupEventListeners() {
+            // Search Input listener
+            searchInput.addEventListener('input', (e) => {
+                activeFilters.search = e.target.value.trim();
+                clearBtn.style.display = activeFilters.search ? 'block' : 'none';
+                applyFiltersAndRender();
+            });
+
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                activeFilters.search = '';
+                clearBtn.style.display = 'none';
+                applyFiltersAndRender();
+                searchInput.focus();
+            });
+
+            // Instrument Tags listener
+            instrumentTagsContainer.addEventListener('click', (e) => {
+                const tag = e.target.closest('.tag-pill');
+                if (!tag) return;
+
+                const selectedInst = tag.dataset.inst;
+                activeFilters.instrument = selectedInst;
+
+                // Update active classes
+                const pills = instrumentTagsContainer.querySelectorAll('.tag-pill');
+                pills.forEach(pill => {
+                    pill.classList.toggle('active', pill.dataset.inst === selectedInst);
+                });
+
+                applyFiltersAndRender();
+            });
+
+            // Score Chips listener
+            scoreFiltersContainer.addEventListener('click', (e) => {
+                const chip = e.target.closest('.score-filter-chip');
+                if (!chip) return;
+
+                const piece = chip.dataset.score;
+                toggleScoreFilter(piece);
+            });
+
+            // View Toggle Button listener
+            viewToggleBtn.addEventListener('click', () => {
+                if (currentLayout === 'card') {
+                    setLayout('table');
+                } else {
+                    setLayout('card');
+                }
+            });
+
+            // Reset filter link listener
+            resetFiltersBtn.addEventListener('click', () => {
+                resetAllFilters();
+            });
+        }
+    </script>
+</body>
+</html>
