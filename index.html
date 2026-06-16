@@ -1169,23 +1169,51 @@
         };
         let currentLayout = 'card'; // 'card' or 'table'
 
-        // Check state helpers (stored in localStorage)
+        // Check state helpers (stored in localStorage and synced via WebSockets)
+        let clientStates = {};
+        let socket = null;
+        let isConnected = false;
+
         function getCheckState(name, inst, piece) {
-            const key = `assign_37th_${name}_${inst}_${piece}`;
-            const stored = localStorage.getItem(key);
+            const key = `${name}_${inst}_${piece}`;
+            if (clientStates[key] !== undefined) {
+                return clientStates[key];
+            }
+            // Fallback to localStorage if not yet loaded
+            const localKey = `assign_37th_${name}_${inst}_${piece}`;
+            const stored = localStorage.getItem(localKey);
             return stored ? JSON.parse(stored) : { dist: false, recv: false };
         }
 
         function saveCheckState(name, inst, piece, state) {
-            const key = `assign_37th_${name}_${inst}_${piece}`;
-            localStorage.setItem(key, JSON.stringify(state));
+            const key = `${name}_${inst}_${piece}`;
+            clientStates[key] = state;
+            
+            // Backup to localStorage
+            const localKey = `assign_37th_${name}_${inst}_${piece}`;
+            localStorage.setItem(localKey, JSON.stringify(state));
         }
 
         function handleCheckChange(name, inst, piece, type, checked) {
             const state = getCheckState(name, inst, piece);
             state[type] = checked;
+            
             saveCheckState(name, inst, piece, state);
+            updateDOMState(name, inst, piece, state);
 
+            // Send via WebSocket to server
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({
+                    type: 'UPDATE_STATE',
+                    name,
+                    inst,
+                    piece,
+                    state
+                }));
+            }
+        }
+
+        function updateDOMState(name, inst, piece, state) {
             const stateClass = state.recv ? 'state-recv' : (state.dist ? 'state-dist' : 'state-none');
 
             // Synchronize Card View elements
@@ -1238,45 +1266,100 @@
                 toastMsg = `${name}님의 모든 악보가 [수령] 완료되었습니다.`;
             }
 
+            const pieceUpdates = [];
+
             scoreHeaders.forEach(piece => {
                 if (member.pieces[piece]) {
                     saveCheckState(name, inst, piece, targetState);
-                    
-                    const stateClass = targetState.recv ? 'state-recv' : (targetState.dist ? 'state-dist' : 'state-none');
-                    
-                    // Sync Card UI
-                    document.querySelectorAll(`.card-piece-item[data-name="${name}"][data-inst="${inst}"][data-piece="${piece}"]`).forEach(item => {
-                        item.className = `card-piece-item assigned ${stateClass}`;
-                        const distLabel = item.querySelector('.dist-label');
-                        if (distLabel) {
-                            distLabel.classList.toggle('checked', targetState.dist);
-                            distLabel.querySelector('.dist-cb').checked = targetState.dist;
-                        }
-                        const recvLabel = item.querySelector('.recv-label');
-                        if (recvLabel) {
-                            recvLabel.classList.toggle('checked', targetState.recv);
-                            recvLabel.querySelector('.recv-cb').checked = targetState.recv;
-                        }
-                    });
-
-                    // Sync Table UI
-                    document.querySelectorAll(`.table-piece-cell[data-name="${name}"][data-inst="${inst}"][data-piece="${piece}"]`).forEach(cell => {
-                        cell.className = `table-piece-cell ${stateClass}`;
-                        const distLabel = cell.querySelector('.dist-label');
-                        if (distLabel) {
-                            distLabel.classList.toggle('checked', targetState.dist);
-                            distLabel.querySelector('.dist-cb').checked = targetState.dist;
-                        }
-                        const recvLabel = cell.querySelector('.recv-label');
-                        if (recvLabel) {
-                            recvLabel.classList.toggle('checked', targetState.recv);
-                            recvLabel.querySelector('.recv-cb').checked = targetState.recv;
-                        }
-                    });
+                    updateDOMState(name, inst, piece, targetState);
+                    pieceUpdates.push({ piece, state: targetState });
                 }
             });
 
+            // Send via WebSocket to server
+            if (socket && socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({
+                    type: 'BATCH_UPDATE',
+                    name,
+                    inst,
+                    pieceStates: pieceUpdates
+                }));
+            }
+
             showToast(toastMsg);
+        }
+
+        // WebSocket connection manager
+        function connectWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const host = window.location.host || 'localhost:3000';
+            const wsUrl = `${protocol}//${host}`;
+
+            console.log('Connecting to WebSocket:', wsUrl);
+            socket = new WebSocket(wsUrl);
+
+            socket.onopen = () => {
+                console.log('WebSocket connected.');
+                updateConnectionStatus(true);
+            };
+
+            socket.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    
+                    if (data.type === 'INIT') {
+                        clientStates = data.states;
+                        // Cache backup
+                        Object.keys(clientStates).forEach(key => {
+                            localStorage.setItem(`assign_37th_${key}`, JSON.stringify(clientStates[key]));
+                        });
+                        applyFiltersAndRender();
+                    } 
+                    else if (data.type === 'UPDATE_STATE') {
+                        const { name, inst, piece, state } = data;
+                        saveCheckState(name, inst, piece, state);
+                        updateDOMState(name, inst, piece, state);
+                    } 
+                    else if (data.type === 'BATCH_UPDATE') {
+                        const { name, inst, pieceStates } = data;
+                        pieceStates.forEach(({ piece, state }) => {
+                            saveCheckState(name, inst, piece, state);
+                            updateDOMState(name, inst, piece, state);
+                        });
+                    }
+                } catch (e) {
+                    console.error('Failed to parse WebSocket message:', e);
+                }
+            };
+
+            socket.onclose = () => {
+                console.warn('WebSocket connection closed. Reconnecting in 3s...');
+                updateConnectionStatus(false);
+                setTimeout(connectWebSocket, 3000);
+            };
+
+            socket.onerror = (err) => {
+                console.error('WebSocket error:', err);
+                socket.close();
+            };
+        }
+
+        function updateConnectionStatus(connected) {
+            isConnected = connected;
+            const logoBadge = document.querySelector('.logo-badge');
+            if (logoBadge) {
+                if (connected) {
+                    logoBadge.textContent = '37th Concert Assignments (Online)';
+                    logoBadge.style.color = '#c7d2fe';
+                    logoBadge.style.borderColor = 'rgba(99, 102, 241, 0.3)';
+                    logoBadge.style.background = 'linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2))';
+                } else {
+                    logoBadge.textContent = '37th Concert Assignments (Offline)';
+                    logoBadge.style.color = '#fda4af';
+                    logoBadge.style.borderColor = 'rgba(244, 63, 94, 0.3)';
+                    logoBadge.style.background = 'rgba(244, 63, 94, 0.1)';
+                }
+            }
         }
 
         // DOM elements
@@ -1343,6 +1426,9 @@
 
             // Set up event listeners
             setupEventListeners();
+
+            // Establish real-time connection
+            connectWebSocket();
         }
 
         // CSV Parser (연락처 열이 제외되었으므로 slice는 4로 시작)
