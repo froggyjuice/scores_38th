@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>37회 정기연주회 파트별 악보 배정 현황</title>
+    <title>38회 정기연주회 파트별 악보 배정 현황</title>
     <!-- Pretendard Web Font for clean Korean typography -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <style>
@@ -938,8 +938,8 @@
     <div class="container">
         <!-- Logo and Header -->
         <header>
-            <div class="logo-badge">37th Concert Assignments</div>
-            <h1>제37회 정기연주회 악보 배정 현황</h1>
+            <div class="logo-badge">38th Concert Assignments</div>
+            <h1>제38회 정기연주회 악보 배정 현황</h1>
         </header>
 
         <!-- Stats Toggle Button -->
@@ -1166,13 +1166,13 @@
         // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCsB_fxaOhruETepbgq4l42bjMtWaBtCS0",
-            authDomain: "scores-37th.firebaseapp.com",
+            authDomain: "scores-38th.firebaseapp.com",
             // Realtime Database의 URL입니다. 만약 다른 리전(예: 싱가포르)에 생성하셨다면
-            // "https://scores-37th-default-rtdb.asia-southeast1.firebasedatabase.app" 형태로 설정될 수 있으니
+            // "https://scores-38th-default-rtdb.asia-southeast1.firebasedatabase.app" 형태로 설정될 수 있으니
             // 연결되지 않을 경우 Firebase 콘솔에서 확인 후 변경해 주세요.
-            databaseURL: "https://scores-37th-default-rtdb.firebaseio.com",
-            projectId: "scores-37th",
-            storageBucket: "scores-37th.firebasestorage.app",
+            databaseURL: "https://scores-38th-default-rtdb.firebaseio.com",
+            projectId: "scores-38th",
+            storageBucket: "scores-38th.firebasestorage.app",
             messagingSenderId: "377407228264",
             appId: "1:377407228264:web:b8933f896e1a3de6f0eedd",
             measurementId: "G-5E6CXN2YRJ"
@@ -1199,7 +1199,7 @@
                 return clientStates[key];
             }
             // Fallback to localStorage if not yet loaded
-            const localKey = `assign_37th_${name}_${inst}_${piece}`;
+            const localKey = `assign_38th_${name}_${inst}_${piece}`;
             const stored = localStorage.getItem(localKey);
             return stored ? JSON.parse(stored) : { dist: false, recv: false };
         }
@@ -1209,7 +1209,7 @@
             clientStates[key] = state;
             
             // Backup to localStorage
-            const localKey = `assign_37th_${name}_${inst}_${piece}`;
+            const localKey = `assign_38th_${name}_${inst}_${piece}`;
             localStorage.setItem(localKey, JSON.stringify(state));
         }
 
@@ -1324,7 +1324,7 @@
 
                     // Update localStorage backup
                     Object.keys(clientStates).forEach(key => {
-                        localStorage.setItem(`assign_37th_${key}`, JSON.stringify(clientStates[key]));
+                        localStorage.setItem(`assign_38th_${key}`, JSON.stringify(clientStates[key]));
                     });
 
                     // Refresh UI rendering
@@ -1345,12 +1345,12 @@
             const logoBadge = document.querySelector('.logo-badge');
             if (logoBadge) {
                 if (connected) {
-                    logoBadge.textContent = '37th Concert Assignments (Online)';
+                    logoBadge.textContent = '38th Concert Assignments (Online)';
                     logoBadge.style.color = '#c7d2fe';
                     logoBadge.style.borderColor = 'rgba(99, 102, 241, 0.3)';
                     logoBadge.style.background = 'linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2))';
                 } else {
-                    logoBadge.textContent = '37th Concert Assignments (Offline)';
+                    logoBadge.textContent = '38th Concert Assignments (Offline)';
                     logoBadge.style.color = '#fda4af';
                     logoBadge.style.borderColor = 'rgba(244, 63, 94, 0.3)';
                     logoBadge.style.background = 'rgba(244, 63, 94, 0.1)';

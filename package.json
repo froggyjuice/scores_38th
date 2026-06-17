@@ -1,5 +1,5 @@
 {
-  "name": "scores_37th",
+  "name": "scores_38th",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,18 +8,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/froggyjuice/scores_37th.git"
+    "url": "git+https://github.com/froggyjuice/scores_38th.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/froggyjuice/scores_37th/issues"
+    "url": "https://github.com/froggyjuice/scores_38th/issues"
   },
-  "homepage": "https://github.com/froggyjuice/scores_37th#readme",
+  "homepage": "https://github.com/froggyjuice/scores_38th#readme",
   "dependencies": {
     "express": "^5.2.1",
     "ws": "^8.21.0"
   }
 }
+
